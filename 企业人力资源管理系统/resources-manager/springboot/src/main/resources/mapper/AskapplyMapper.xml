@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.AskapplyMapper">
+
+    <sql id="Base_Column_List">
+        id,employee_id,department_id,name,start,end,process,status,note
+    </sql>
+
+    <select id="selectAll" resultType="com.example.entity.Askapply">
+        select askApply.*, employee.name as employeeName, department.name as departmentName
+        from askApply
+        left join employee on askApply.employee_id = employee.id
+        left join department on askApply.department_id = department.id
+        <where>
+            <if test="id != null"> and id= #{id}</if>
+            <if test="employeeId != null"> and askApply.employee_id= #{employeeId}</if>
+            <if test="departmentId != null"> and askApply.department_id= #{departmentId}</if>
+            <if test="name != null"> and name= #{name}</if>
+            <if test="start != null"> and start= #{start}</if>
+            <if test="end != null"> and end= #{end}</if>
+            <if test="process != null"> and process= #{process}</if>
+            <if test="status != null"> and status= #{status}</if>
+            <if test="note != null"> and note= #{note}</if>
+        </where>
+        order by id asc
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Askapply">
+        select
+        <include refid="Base_Column_List" />
+        from askApply
+        where id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from askApply
+        where  id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Askapply" useGeneratedKeys="true">
+        insert into askApply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="employeeId != null">employee_id,</if>
+            <if test="departmentId != null">department_id,</if>
+            <if test="name != null">name,</if>
+            <if test="start != null">start,</if>
+            <if test="end != null">end,</if>
+            <if test="process != null">process,</if>
+            <if test="status != null">status,</if>
+            <if test="note != null">note,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="employeeId != null">#{employeeId},</if>
+            <if test="departmentId != null">#{departmentId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="start != null">#{start},</if>
+            <if test="end != null">#{end},</if>
+            <if test="process != null">#{process},</if>
+            <if test="status != null">#{status},</if>
+            <if test="note != null">#{note},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Askapply">
+        update askApply
+        <set>
+            <if test="employeeId != null">
+                employee_id = #{employeeId},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="start != null">
+                start = #{start},
+            </if>
+            <if test="end != null">
+                end = #{end},
+            </if>
+            <if test="process != null">
+                process = #{process},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="note != null">
+                note = #{note},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.FinancialMapper">
+
+    <sql id="Base_Column_List">
+        id,department_id,name,time,price
+    </sql>
+
+    <select id="selectAll" resultType="com.example.entity.Financial">
+        select financial.*,department.name as departmentName
+        from financial
+        left join department on financial.department_id = department.id
+
+        <where>
+            <if test="id != null"> and id= #{id}</if>
+            <if test="departmentId != null"> and department_id= #{departmentId}</if>
+            <if test="name != null"> and financial.name like concat('%',#{name},'%') </if>
+            <if test="time != null"> and time= #{time}</if>
+            <if test="price != null"> and price= #{price}</if>
+        </where>
+        order by id asc
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Financial">
+        select
+        <include refid="Base_Column_List" />
+        from financial
+        where id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from financial
+        where  id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Financial" useGeneratedKeys="true">
+        insert into financial
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="departmentId != null">department_id,</if>
+                <if test="name != null">name,</if>
+                <if test="time != null">time,</if>
+                <if test="price != null">price,</if>
+
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="departmentId != null">#{departmentId},</if>
+                <if test="name != null">#{name},</if>
+                <if test="time != null">#{time},</if>
+                <if test="price != null">#{price},</if>
+
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Financial">
+        update financial
+        <set>
+            <if test="departmentId != null">
+                department_id = #{departmentId},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+
+        </set>
+        where id = #{id} 
+    </update>
+
+</mapper>
