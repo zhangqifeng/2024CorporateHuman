@@ -82,5 +82,7 @@ public class FinancialService {
         List<Financial> list = financialMapper.selectAll(financial);
         return PageInfo.of(list);
     }
-
+    public List<Financial> selectAll2() {
+        return financialMapper.selectAll2();
+    }
 }

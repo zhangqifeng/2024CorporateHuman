@@ -9,6 +9,7 @@ import com.example.mapper.SalaryMapper;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -80,6 +81,10 @@ public class SalaryService {
         PageHelper.startPage(pageNum, pageSize);
         List<Salary> list = salaryMapper.selectAll(salary);
         return PageInfo.of(list);
+    }
+
+    public List<Salary> getMonth() {
+        return salaryMapper.getMonth();
     }
 
 }
