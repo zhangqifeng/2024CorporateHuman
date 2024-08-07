@@ -88,4 +88,7 @@ public class SalaryService {
         return PageInfo.of(list);
     }
 
+    public List<Salary> getMonth() {
+        return salaryMapper.getMonth();
+    }
 }

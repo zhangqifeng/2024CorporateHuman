@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.entity.Salary;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface SalaryMapper {
     */
     List<Salary> selectAll(Salary salary);
 
+    @Select("select * from salary group by year")
+    List<Salary> getMonth();
 }

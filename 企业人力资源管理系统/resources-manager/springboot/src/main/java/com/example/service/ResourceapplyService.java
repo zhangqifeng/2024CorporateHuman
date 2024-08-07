@@ -93,6 +93,9 @@ public class ResourceapplyService {
                 if (ApplyEnum.APPLY_NO.status.equals(status)) {
                     resourceapply.setStatus(ApplyEnum.STATUS_HEADER_APPLY_NO.status);
                     resourceapply.setProcess(ApplyEnum.APPLY_DONE.status);
+                    Resources resources = resourcesMapper.selectById(resourceapply.getResourcesId());
+                    resources.setNum(resources.getNum() + resourceapply.getResourcesId());
+                    resourcesMapper.updateById(resources);
                 }
             }
         } else {

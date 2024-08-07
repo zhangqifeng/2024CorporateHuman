@@ -130,4 +130,28 @@ public class FinancialController {
         return Result.success(result);
     }
 
+    @GetMapping("/getBar")
+    public Result bar() {
+        // 获取所有的财务信息
+        List<Financial> list = financialService.selectAll2();
+        Map<String, Double> collect = list.stream().filter(x -> ObjectUtil.isNotEmpty(x.getTime()))
+                .collect(Collectors.groupingBy(Financial::getTime, Collectors.reducing(0.0, Financial::getPrice, Double::sum)));
+        List<String> xAxis = new ArrayList<>();
+        List<Double> data = new ArrayList<>();
+        for (String key : collect.keySet()) {
+            xAxis.add(key);
+            data.add(collect.get(key));
+        }
+        Map<String, Object> result = new HashMap<>();
+        result.put("text", "财务支出柱状");
+        result.put("subtext", "统计维度：年月");
+        result.put("xAxis", xAxis);
+        result.put("yAxis", data);
+        return Result.success(result);
+    }
+
+
+
+
+
 }
