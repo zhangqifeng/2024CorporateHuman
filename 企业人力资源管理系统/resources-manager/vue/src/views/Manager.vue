@@ -38,7 +38,7 @@
             <i class="el-icon-s-home"></i>
             <span slot="title">系统首页</span>
           </el-menu-item>
-          <el-submenu index="info">
+          <el-submenu index="info" v-if="user.role === 'ADMIN'">
             <template slot="title">
               <i class="el-icon-menu"></i><span>信息管理</span>
             </template>
@@ -50,7 +50,7 @@
               <i class="el-icon-menu"></i><span>人事管理</span>
             </template>
             <el-menu-item index="/salary">薪资信息</el-menu-item>
-            <el-menu-item index="/financial">财务支出</el-menu-item>
+            <el-menu-item index="/financial" v-if="user.role === 'ADMIN'">财务支出</el-menu-item>
             <el-menu-item v-if="user.role === 'USER'" index="/askRecord">请假记录</el-menu-item>
             <el-menu-item v-if="user.role === 'ADMIN'|| user.level ==='主管'" index="/askApply">请假审批</el-menu-item>
             <el-menu-item index="/resources">资产信息</el-menu-item>
@@ -58,7 +58,7 @@
             <el-menu-item index="/resourcesMy">员工资产</el-menu-item>
           </el-submenu>
 
-          <el-submenu index="user">
+          <el-submenu index="user" v-if="user.role === 'ADMIN'">
             <template slot="title">
               <i class="el-icon-menu"></i><span>用户管理</span>
             </template>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="search">
-      <el-input placeholder="请输入请假事由" style="width: 200px" v-model="name"></el-input>
+      <el-input placeholder="请输入资产名称" style="width: 200px" v-model="resourceName"></el-input>
       <el-button type="info" plain style="margin-left: 10px" @click="load(1)">查询</el-button>
       <el-button type="warning" plain style="margin-left: 10px" @click="reset">重置</el-button>
     </div>
@@ -40,7 +40,7 @@ export default {
       pageNum: 1,   // 当前的页码
       pageSize: 10,  // 每页显示的个数
       total: 0,
-      name: null,
+      resourceName: null,
       form: {},
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       ids: [],
@@ -57,7 +57,7 @@ export default {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          name: this.name,
+          resourceName: this.resourceName,
         }
       }).then(res => {
         this.tableData = res.data?.list
@@ -65,7 +65,7 @@ export default {
       })
     },
     reset() {
-      this.name = null
+      this.resourceName = null
       this.load(1)
     },
     handleCurrentChange(pageNum) {

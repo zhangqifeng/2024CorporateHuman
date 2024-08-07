@@ -17,7 +17,7 @@
             <if test="id != null"> and id= #{id}</if>
             <if test="employeeId != null"> and askApply.employee_id= #{employeeId}</if>
             <if test="departmentId != null"> and askApply.department_id= #{departmentId}</if>
-            <if test="name != null"> and name= #{name}</if>
+            <if test="name != null"> and name like concat('%',#{name},'%') </if>
             <if test="start != null"> and start= #{start}</if>
             <if test="end != null"> and end= #{end}</if>
             <if test="process != null"> and process= #{process}</if>

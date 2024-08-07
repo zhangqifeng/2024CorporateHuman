@@ -30,7 +30,7 @@
 <!--          <div id="line" style="height: 400px; width: 50%" class="card"></div>-->
 <!--          <div></div>-->
 <!--      </div>-->
-      <div style="display: flex">
+      <div v-if="user.role === 'ADMIN'" style="display: flex">
           <div id="pie" style="height: 450px; flex: 1" class="card"></div>
           <div style="height: 450px; flex: 1;" class="card">
               <el-select v-model="month" style="width: 50%" @change="getSalaryMonth(month)">
@@ -39,7 +39,7 @@
               <div id="salaryBar" style="height: 400px; padding-top: 15px"></div>
           </div>
       </div>
-      <div style="margin-top: 10px; display: flex">
+      <div v-if="user.role === 'ADMIN'" style="margin-top: 10px; display: flex">
           <div id="line" style="height: 400px; flex: 1" class="card"></div>
           <div id="bar" style="height: 400px; flex: 1" class="card"></div>
       </div>
@@ -165,17 +165,25 @@ export default {
   data() {
     return {
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
-      notices: []
+      isAdmin:false,
+      notices: [],
+      monthData:[],
+      month:''
+
     }
   },
   created() {
+    this.isAdmin = this.user.role === 'ADMIN';
     this.$request.get('/notice/selectAll').then(res => {
       this.notices = res.data || []
     })
-      this.getFinancialPie()
-      this.getFinancialLine()
-      this.getMonthData()
-      this.getFinancialBar()
+      if (this.isAdmin){
+          this.getFinancialPie()
+          this.getFinancialLine()
+          this.getMonthData()
+          this.getFinancialBar()
+      }
+
   },
     methods:{
         getFinancialPie() {
