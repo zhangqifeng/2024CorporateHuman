@@ -19,13 +19,14 @@
             <if test="employeeId != null"> and resourceapply.employee_id= #{employeeId}</if>
             <if test="departmentId != null"> and resourceapply.department_id= #{departmentId}</if>
             <if test="resourcesId != null"> and resourceapply.resources_id= #{resourcesId}</if>
+            <if test="resourceName != null"> and resources.name like concat('%',#{resourceName},'%')</if>
             <if test="num != null"> and num= #{num}</if>
             <if test="time != null"> and time= #{time}</if>
             <if test="process != null"> and process= #{process}</if>
             <if test="status != null"> and status= #{status}</if>
             <if test="note != null"> and note= #{note}</if>
         </where>
-        order by id desc
+        order by id asc
     </select>
 
     <select id="selectById" resultType="com.example.entity.Resourceapply">
